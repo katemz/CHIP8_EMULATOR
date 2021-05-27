@@ -4,7 +4,7 @@ Application::Application()
 {
 }
 
-bool Application::init()
+bool Application::init(std::unique_ptr<IPixelArrayDisplay> pixelArrayDisplay)
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -34,6 +34,8 @@ bool Application::init()
         std::cerr << "Failed to set renderer drawing color: " << SDL_GetError() << std::endl;
         return false;
     }
+
+    pixelArrayDisplay_ = std::move(pixelArrayDisplay);
 
     return true;
 }
@@ -90,23 +92,24 @@ void Application::run()
         SDL_SetRenderDrawColor(renderer_, 0xff, 0xff, 0xff, 0xff);
         SDL_RenderClear(renderer_);
 
-        size_t n = 60;
+
         int rectWidth = 10;
         int margin = 1;
 
-        for (size_t i = 0; i < n; i++)
+        for (size_t i = 0; i < pixelArrayDisplay_->getHeight(); i++)
         {
-            for (size_t j = 0; j < n; j++)
+            for (size_t j = 0; j < pixelArrayDisplay_->getWidth(); j++)
             {
-                int x1 = (2*i + 1) * margin + i * rectWidth;
-                int y1 = (2*j + 1) * margin + j * rectWidth;
-
-                //std::cout << "Rectangle: " << i << " - x1,y1: " << x1 << "," << y1 << std::endl;
-
+                int y1 = (2*i + 1) * margin + i * rectWidth;
+                int x1 = (2*j + 1) * margin + j * rectWidth;
 
                 SDL_Rect fill_rect = {x1, y1, rectWidth, rectWidth};
-                SDL_SetRenderDrawColor(renderer_, 0xff, 0x00, 0x00, 0xff);
-                SDL_RenderFillRect(renderer_, &fill_rect);
+                bool pixel = pixelArrayDisplay_->getPixelAt(j, i);
+                if (pixel)
+                {
+                    SDL_SetRenderDrawColor(renderer_, 0xff, 0x00, 0x00, 0xff);
+                    SDL_RenderFillRect(renderer_, &fill_rect);
+                }
             }
         }
 
