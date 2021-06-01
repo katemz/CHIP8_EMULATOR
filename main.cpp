@@ -3,12 +3,16 @@
 #include "application.h"
 #include "chip8.h"
 
-
-
-int main(int argc, char *args[]) {
+int main(int argc, char *args[])
+{
+    if (argc < 2)
+    {
+        std::cout << "Usage: ./chip8 <ROM file path>" <<std::endl;
+        return -1;
+    }
 
     Application& app = Application::instance();
-    std::unique_ptr<IPixelArrayDisplay> chip8 = std::make_unique<CHIP8>();
+    std::unique_ptr<IEmulator> chip8 = std::make_unique<CHIP8>();
 
     if (!app.init(std::move(chip8))) {
         std::cerr << "Failed to init" << std::endl;

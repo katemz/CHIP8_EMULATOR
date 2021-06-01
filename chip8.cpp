@@ -84,7 +84,7 @@ size_t CHIP8::getWidth() const
 
 bool CHIP8::getPixelAt(size_t x, size_t y) const
 {
-    std::cout << "x=" << x << " y=" << y << std::endl;
+    //std::cout << "x=" << x << " y=" << y << std::endl;
 
     size_t index = y * CHIP8_defs::DISPLAY_WIDTH + x;
     return (impl_->display_.at(index) || true);

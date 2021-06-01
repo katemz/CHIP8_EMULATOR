@@ -1,9 +1,9 @@
-#ifndef __IPIXELARRAYDISPLAY_H__
-#define __IPIXELARRAYDISPLAY_H__
+#ifndef IDISPLAYABLE_H
+#define IDISPLAYABLE_H
 
 #include <stddef.h>
 
-class IPixelArrayDisplay
+class IDisplayable
 {
 public:
     virtual size_t getHeight() const = 0;
@@ -12,4 +12,4 @@ public:
 };
 
 
-#endif // __IPIXELARRAYDISPLAY_H__
+#endif // IDISPLAYABLE_H

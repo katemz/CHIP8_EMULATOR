@@ -4,7 +4,7 @@ Application::Application()
 {
 }
 
-bool Application::init(std::unique_ptr<IPixelArrayDisplay> pixelArrayDisplay)
+bool Application::init(std::unique_ptr<IEmulator> emulator)
 {
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -35,7 +35,7 @@ bool Application::init(std::unique_ptr<IPixelArrayDisplay> pixelArrayDisplay)
         return false;
     }
 
-    pixelArrayDisplay_ = std::move(pixelArrayDisplay);
+    emulator_ = std::move(emulator);
 
     return true;
 }
@@ -63,7 +63,8 @@ void Application::run()
             }
             else if( e.type == SDL_KEYDOWN )
             {
-                //Select surfaces based on key press
+                std::cout << "Pressed..." << std::endl;
+
                 switch( e.key.keysym.sym )
                 {
                     case SDLK_w:
@@ -92,19 +93,18 @@ void Application::run()
         SDL_SetRenderDrawColor(renderer_, 0xff, 0xff, 0xff, 0xff);
         SDL_RenderClear(renderer_);
 
-
         int rectWidth = 10;
         int margin = 1;
 
-        for (size_t i = 0; i < pixelArrayDisplay_->getHeight(); i++)
+        for (size_t i = 0; i < emulator_->getHeight(); i++)
         {
-            for (size_t j = 0; j < pixelArrayDisplay_->getWidth(); j++)
+            for (size_t j = 0; j < emulator_->getWidth(); j++)
             {
                 int y1 = (2*i + 1) * margin + i * rectWidth;
                 int x1 = (2*j + 1) * margin + j * rectWidth;
 
                 SDL_Rect fill_rect = {x1, y1, rectWidth, rectWidth};
-                bool pixel = pixelArrayDisplay_->getPixelAt(j, i);
+                bool pixel = emulator_->getPixelAt(j, i);
                 if (pixel)
                 {
                     SDL_SetRenderDrawColor(renderer_, 0xff, 0x00, 0x00, 0xff);

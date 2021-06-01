@@ -7,12 +7,12 @@
 #include <array>
 #include <memory>
 #include "chip8_defs.h"
-#include "ipixelarraydisplay.h"
+#include "iemulator.h"
 
 struct CHIP8_impl;
 
 
-class CHIP8 : public IPixelArrayDisplay
+class CHIP8 : public IEmulator
 {
 public:
     CHIP8();
@@ -27,6 +27,7 @@ public:
     void keyPressed(int i);
     void keyReleased(int i);
 
+    // IEmulator : IDisplayable
     virtual size_t getHeight() const override;
     virtual size_t getWidth() const override;
     virtual bool getPixelAt(size_t x, size_t y) const override;

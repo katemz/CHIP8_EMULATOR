@@ -4,7 +4,7 @@
 #include <SDL2/SDL.h>
 #include <iostream>
 #include <memory>
-#include <ipixelarraydisplay.h>
+#include <iemulator.h>
 
 class Application
 {
@@ -15,7 +15,7 @@ public:
         return instance_;
     }
 
-    bool init(std::unique_ptr<IPixelArrayDisplay> pixelArrayDisplay);
+    bool init(std::unique_ptr<IEmulator> emulator);
     void run();
     void close();
 private:
@@ -26,7 +26,7 @@ private:
 
     const int WIDTH = 1024;
     const int HEIGHT = 768;
-    std::unique_ptr<IPixelArrayDisplay> pixelArrayDisplay_;
+    std::unique_ptr<IEmulator> emulator_;
 };
 
 #endif // APPLICATION_H

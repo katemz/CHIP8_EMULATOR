@@ -22,7 +22,10 @@ set(HEADERS
     chip8.h
     chip8_defs.h
     chip8_impl.h
-    ipixelarraydisplay.h
+    idisplayable.h
+    ihaskeyboard.h
+    ihasloadablerom.h
+    iemulator.h
 )
 
 add_executable(CHIP8 ${SOURCES} ${HEADERS})
