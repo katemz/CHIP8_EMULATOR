@@ -8,6 +8,7 @@
 #include <memory>
 #include "chip8_defs.h"
 #include "iemulator.h"
+#include <map>
 
 struct CHIP8_impl;
 
