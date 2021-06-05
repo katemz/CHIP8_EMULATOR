@@ -9,6 +9,8 @@ class IEmulator : public IDisplayable,
         public IHasKeyboard,
         public IHasLoadableROM
 {
+public:
+    virtual void cycle() = 0;
 };
 
 #endif // IEMULATOR_H

@@ -19,21 +19,29 @@ public:
     ~CHIP8();
 
     void display() const;
-    void loadGame(const std::string& filePath);
-    void cycle();
 
     bool displayUpdatePending() const;
     void clearDisplayUpdatePending();
-    void keyPressed(int i);
-    void keyReleased(int i);
+
+    // IEmulator
+    void cycle() override;
 
     // IEmulator : IDisplayable
     virtual size_t getHeight() const override;
     virtual size_t getWidth() const override;
     virtual bool getPixelAt(size_t x, size_t y) const override;
 
+    // IEmulator : IHasKeyboard
+    void keyPressed(char c) override;
+    void keyReleased(char c) override;
+
+    // IEmulator : IHasLoadableROM
+    void loadROM(const std::string& filePath) override;
+
 private:
     std::unique_ptr<CHIP8_impl> impl_;
+
+    static std::map<char, int> keyMapping_;
 };
 
 

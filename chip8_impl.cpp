@@ -460,7 +460,7 @@ void CHIP8_impl::executeOpcode(uint16_t opcode)
 
 void CHIP8_impl::executeOpcode()
 {
-    std::cout << "Opcode: " << std::showbase << std::hex << (int)opcode_ << std::endl;
+   // std::cout << "Opcode: " << std::showbase << std::hex << (int)opcode_ << std::endl;
 
     switch (opcode_ & 0xF000)
     {

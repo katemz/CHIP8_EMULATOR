@@ -55,6 +55,7 @@ void Application::run()
 
     while (loop)
     {
+        emulator_->cycle();
         SDL_Event e;
         while (SDL_PollEvent(&e))
         {
@@ -67,23 +68,71 @@ void Application::run()
 
                 switch( e.key.keysym.sym )
                 {
-                    case SDLK_w:
-                    std::cout << "Pressed up!" << std::endl;
+                case SDLK_1:
+                    emulator_->keyPressed('1');
                     break;
 
-                    case SDLK_a:
-                    std::cout << "Pressed left!" << std::endl;
+                case SDLK_2:
+                    emulator_->keyPressed('2');
                     break;
 
-                    case SDLK_d:
-                    std::cout << "Pressed right!" << std::endl;
+                case SDLK_3:
+                    emulator_->keyPressed('3');
                     break;
 
-                    case SDLK_s:
-                    std::cout << "Pressed down!" << std::endl;
+                case SDLK_4:
+                    emulator_->keyPressed('4');
                     break;
 
-                    default:
+                case SDLK_5:
+                    emulator_->keyPressed('5');
+                    break;
+
+                case SDLK_w:
+                    emulator_->keyPressed('w');
+                    break;
+
+                case SDLK_e:
+                    emulator_->keyPressed('e');
+                    break;
+
+                case SDLK_r:
+                    emulator_->keyPressed('r');
+                    break;
+
+                case SDLK_a:
+                    emulator_->keyPressed('a');
+                    break;
+
+                case SDLK_d:
+                    emulator_->keyPressed('d');
+                    break;
+
+                case SDLK_s:
+                    emulator_->keyPressed('s');
+                    break;
+
+                case SDLK_f:
+                    emulator_->keyPressed('f');
+                    break;
+
+                case SDLK_z:
+                    emulator_->keyPressed('z');
+                    break;
+
+                case SDLK_x:
+                    emulator_->keyPressed('x');
+                    break;
+
+                case SDLK_c:
+                    emulator_->keyPressed('c');
+                    break;
+
+                case SDLK_v:
+                    emulator_->keyPressed('v');
+                    break;
+
+                default:
                     break;
                 }
             }

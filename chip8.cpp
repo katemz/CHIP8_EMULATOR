@@ -10,6 +10,25 @@
 #include "chip8_impl.h"
 
 
+std::map<char, int> CHIP8::keyMapping_ ={
+    {'1', 0x1},
+    {'2', 0x2},
+    {'3', 0x3},
+    {'4', 0xC},
+    {'5', 0x4},
+    {'w', 0x5},
+    {'e', 0x6},
+    {'r', 0xD},
+    {'a', 0x7},
+    {'s', 0x8},
+    {'d', 0x9},
+    {'f', 0xE},
+    {'z', 0xA},
+    {'x', 0x0},
+    {'c', 0xB},
+    {'v', 0xF}
+};
+
 CHIP8::CHIP8()
     : impl_(std::make_unique<CHIP8_impl>())
 {
@@ -21,7 +40,8 @@ void CHIP8::display() const
 {
     impl_->display();
 }
-void CHIP8::loadGame(const std::string& filePath)
+
+void CHIP8::loadROM(const std::string& filePath)
 {
     std::ifstream in;
     in.open(filePath, std::ios::in | std::ios::binary);
@@ -61,15 +81,19 @@ void CHIP8::clearDisplayUpdatePending()
 //|A|0|B|F|                |Z|X|C|V|
 //+-+-+-+-+                +-+-+-+-+
 
-void CHIP8::keyPressed(int i)
+void CHIP8::keyPressed(char c)
 {
-    std::cout << "Key pressed " << i << std::endl;
-    impl_->keys_.at(i) = 1;
+    std::cout << "Key pressed " << c << std::endl;
+
+    int index = keyMapping_.at(c);
+    impl_->keys_.at(index) = 1;
 }
-void CHIP8::keyReleased(int i)
+void CHIP8::keyReleased(char c)
 {
-    std::cout << "Key released " << i << std::endl;
-    impl_->keys_.at(i) = 0;
+    std::cout << "Key released " << c << std::endl;
+
+    int index = keyMapping_.at(c);
+    impl_->keys_.at(index) = 0;
 }
 
 size_t CHIP8::getHeight() const
@@ -87,5 +111,5 @@ bool CHIP8::getPixelAt(size_t x, size_t y) const
     //std::cout << "x=" << x << " y=" << y << std::endl;
 
     size_t index = y * CHIP8_defs::DISPLAY_WIDTH + x;
-    return (impl_->display_.at(index) || true);
+    return (impl_->display_.at(index));
 }
