@@ -24,8 +24,9 @@ private:
     SDL_Window *window_ = nullptr;
     SDL_Renderer *renderer_ = nullptr;
 
-    const int WIDTH = 1024;
-    const int HEIGHT = 768;
+    const int rectWidth_ = 10;
+    const int margin_ = 1;
+
     std::unique_ptr<IEmulator> emulator_;
 };
 

@@ -1,4 +1,6 @@
 #include "application.h"
+#include <chrono>
+#include <thread>
 
 Application::Application()
 {
@@ -12,8 +14,13 @@ bool Application::init(std::unique_ptr<IEmulator> emulator)
         return false;
     }
 
+    auto calculatePixelSizeForRectCount = [=](int rectCount){ return this->rectWidth_ * rectCount + (2* rectCount+1)*this->margin_; };
+
+    int displayHeight = calculatePixelSizeForRectCount(emulator->getHeight());
+    int displayWidth = calculatePixelSizeForRectCount(emulator->getWidth());
+
     window_ = SDL_CreateWindow("CHIP8 EMULATOR", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-        WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+        displayWidth, displayHeight, SDL_WINDOW_SHOWN);
 
     if (window_ == nullptr)
     {
@@ -55,17 +62,15 @@ void Application::run()
 
     while (loop)
     {
-        emulator_->cycle();
+
         SDL_Event e;
         while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT) {
                 loop = false;
             }
-            else if( e.type == SDL_KEYDOWN )
+            else if( e.type == SDL_KEYDOWN)
             {
-                std::cout << "Pressed..." << std::endl;
-
                 switch( e.key.keysym.sym )
                 {
                 case SDLK_1:
@@ -84,8 +89,8 @@ void Application::run()
                     emulator_->keyPressed('4');
                     break;
 
-                case SDLK_5:
-                    emulator_->keyPressed('5');
+                case SDLK_q:
+                    emulator_->keyPressed('q');
                     break;
 
                 case SDLK_w:
@@ -136,7 +141,84 @@ void Application::run()
                     break;
                 }
             }
+            else if ( e.type == SDL_KEYUP)
+            {
+                switch ( e.key.keysym.sym )
+                {
+                case SDLK_1:
+                    emulator_->keyReleased('1');
+                    break;
+
+                case SDLK_2:
+                    emulator_->keyReleased('2');
+                    break;
+
+                case SDLK_3:
+                    emulator_->keyReleased('3');
+                    break;
+
+                case SDLK_4:
+                    emulator_->keyReleased('4');
+                    break;
+
+                case SDLK_q:
+                    emulator_->keyReleased('q');
+                    break;
+
+                case SDLK_w:
+                    emulator_->keyReleased('w');
+                    break;
+
+                case SDLK_e:
+                    emulator_->keyReleased('e');
+                    break;
+
+                case SDLK_r:
+                    emulator_->keyReleased('r');
+                    break;
+
+                case SDLK_a:
+                    emulator_->keyReleased('a');
+                    break;
+
+                case SDLK_d:
+                    emulator_->keyReleased('d');
+                    break;
+
+                case SDLK_s:
+                    emulator_->keyReleased('s');
+                    break;
+
+                case SDLK_f:
+                    emulator_->keyReleased('f');
+                    break;
+
+                case SDLK_z:
+                    emulator_->keyReleased('z');
+                    break;
+
+                case SDLK_x:
+                    emulator_->keyReleased('x');
+                    break;
+
+                case SDLK_c:
+                    emulator_->keyReleased('c');
+                    break;
+
+                case SDLK_v:
+                    emulator_->keyReleased('v');
+                    break;
+
+                default:
+                    break;
+                }
+            }
+
         }
+
+        std::chrono::milliseconds timespan(5); // or whatever
+        std::this_thread::sleep_for(timespan);
+        emulator_->cycle();
 
         // clear
         SDL_SetRenderDrawColor(renderer_, 0xff, 0xff, 0xff, 0xff);
