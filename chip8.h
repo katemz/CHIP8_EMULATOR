@@ -42,7 +42,7 @@ public:
 private:
     std::unique_ptr<CHIP8_impl> impl_;
 
-    static std::map<char, int> keyMapping_;
+    static std::map<char, int> keyLayout_;
 };
 
 

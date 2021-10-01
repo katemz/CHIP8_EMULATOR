@@ -10,23 +10,23 @@
 #include "chip8_impl.h"
 
 
-std::map<char, int> CHIP8::keyMapping_ ={
-    {'1', 0x1},
-    {'2', 0x2},
-    {'3', 0x3},
-    {'4', 0xC},
-    {'5', 0x4},
-    {'w', 0x5},
-    {'e', 0x6},
-    {'r', 0xD},
-    {'a', 0x7},
-    {'s', 0x8},
-    {'d', 0x9},
-    {'f', 0xE},
-    {'z', 0xA},
-    {'x', 0x0},
-    {'c', 0xB},
-    {'v', 0xF}
+std::map<char, int> CHIP8::keyLayout_ ={
+    {'1',  0}, // 1
+    {'2',  1}, // 2
+    {'3',  2}, // 3
+    {'4',  3}, // c
+    {'q',  4}, // 4
+    {'w',  5}, // 5
+    {'e',  6}, // 6
+    {'r',  7}, // d
+    {'a',  8}, // 7
+    {'s',  9}, // 8
+    {'d', 10}, // 9
+    {'f', 11}, // e
+    {'z', 12}, // a
+    {'x', 13}, // 0
+    {'c', 14}, // b
+    {'v', 15}  // f
 };
 
 CHIP8::CHIP8()
@@ -85,14 +85,14 @@ void CHIP8::keyPressed(char c)
 {
     std::cout << "Key pressed " << c << std::endl;
 
-    int index = keyMapping_.at(c);
+    int index = keyLayout_.at(c);
     impl_->keys_.at(index) = 1;
 }
 void CHIP8::keyReleased(char c)
 {
     std::cout << "Key released " << c << std::endl;
 
-    int index = keyMapping_.at(c);
+    int index = keyLayout_.at(c);
     impl_->keys_.at(index) = 0;
 }
 
